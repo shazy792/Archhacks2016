@@ -1,0 +1,168 @@
+body{
+  margin-left:0px;
+}
+@media (min-width: 1280px) {
+  body{
+    margin-left:312px;
+  }
+}
+/* CARD STYLING
+  ============================================================================= */
+div.projectRow {
+  justify-content: space-between; }
+
+md-card-title-media {
+  max-width: 150px; }
+
+md-card-title {
+  max-width: 65%; }
+
+.card-media {
+  margin-right: 16px;
+  border-radius: 50%;
+  overflow: hidden; }
+
+#intro-caption.md-subhead.description {
+  color: rgba(255, 255, 255, 0.7); }
+
+.card-media md-icon {
+  width: 40px;
+  height: 40px;
+  color: rgba(255, 255, 255, 0.87); }
+
+span.card-title {
+  padding-left: 15px;
+  margin-top: 20px; }
+
+.skillsIcon {
+  color: #ffffff;
+  font-size: 2rem; }
+
+.cardLink {
+  text-decoration: none; }
+
+/* NAVBAR STYLING
+  ============================================================================= */
+md-item a {
+  color: #000;
+  text-decoration: none; }
+md-item a:hover {
+  text-decoration: underline; }
+
+md-sidenav.md-sidenav-left {
+  position:fixed !important;
+  height: 100%; }
+
+#sideNavName {
+  line-height: 4rem; }
+
+.user-avatar {
+  border-radius: 99%; }
+
+.nav-small {
+  display: none; }
+
+.nav-large {
+  display: block; }
+
+@media (max-width: 500px) {
+  md-list-item.md-3-line._md-no-proxy.md-with-secondary {
+    padding: 20px; }
+
+  a._md-nav-button:first-of-type {
+    margin-left: 2px; }
+
+  .md-nav-item:first-of-type {
+    margin-left: 0; }
+
+  ul._md-nav-bar-list.layout-row {
+    width: 100%; }
+
+  li.md-nav-item {
+    width: 25%; }
+
+  .nav-large {
+    display: none; }
+
+  .nav-small {
+    display: block;
+    font-size: 1.5rem;
+    text-align: center; } }
+div.md-nav-bar {
+  width: 100%; }
+
+/* FAB STYLING
+  ============================================================================= */
+button.md-button.md-fab {
+  line-height: 1rem; }
+  button.md-button.md-fab i.fa-phone {
+    font-size: 1.5rem; }
+
+@media (min-width: 1280px) {
+  md-fab-speed-dial {
+    display: none; } }
+md-fab-speed-dial.md-fab-bottom-right {
+  position: fixed;
+  right: 15px;
+  bottom: 15px; }
+  md-fab-speed-dial.md-fab-bottom-right .fa {
+    text-align: center;
+    font-size: 1rem; }
+
+/* ANIMATION STYLINGS
+  ============================================================================= */
+#main-container {
+  position: relative;
+  min-height: 800px;
+  overflow: hidden; }
+
+#pages.ng-enter,
+#pages.ng-leave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  transition: 0.5s all ease;
+  -moz-transition: 0.5s all ease;
+  -webkit-transition: 0.5s all ease; }
+
+/* enter animation */
+#pages.ng-enter {
+  -webkit-animation: slideInRight 0.5s both ease;
+  -moz-animation: slideInRight 0.5s both ease;
+  animation: slideInRight 0.5s both ease; }
+
+/* leave animation */
+#pages.ng-leave {
+  -webkit-animation: slideOutLeft 0.5s both ease;
+  -moz-animation: slideOutLeft 0.5s both ease;
+  animation: slideOutLeft 0.5s both ease; }
+
+/* ANIMATION KEYFRAMES
+  ============================================================================= */
+@keyframes slideOutLeft {
+  to {
+    transform: translateX(-200%); } }
+@-moz-keyframes slideOutLeft {
+  to {
+    -moz-transform: translateX(-200%); } }
+@-webkit-keyframes slideOutLeft {
+  to {
+    -webkit-transform: translateX(-200%); } }
+/* slide in from the right */
+@keyframes slideInRight {
+  from {
+    transform: translateX(200%); }
+  to {
+    transform: translateX(0); } }
+@-moz-keyframes slideInRight {
+  from {
+    -moz-transform: translateX(200%); }
+  to {
+    -moz-transform: translateX(0); } }
+@-webkit-keyframes slideInRight {
+  from {
+    -webkit-transform: translateX(200%); }
+  to {
+    -webkit-transform: translateX(0); } }
+
+/*# sourceMappingURL=main.css.map */
