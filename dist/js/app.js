@@ -40,20 +40,8 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
     .state('bracelet.privacy', {
             url: '/privacy',
             templateUrl: 'partials/bracelet-privacy.html',
-        })
-        .state('bracelet.new', {
-            url: '/new',
-            templateUrl: 'partials/bracelet-new.html'
-        })
-        .state('bracelet.post', { // state for clicking specific posts
-            url: '/posts/{id}',
-            templateUrl: '/partials/bracelet-post.html',
-            resolve: { // detects we are entienring the posts staet and then will query for the full post object
-                post: ['$stateParams', 'postsFactory', function($stateParams, postsFactory) {
-                    return postsFactory.get($stateParams.id);
-                }]
-            }
         });
+
 
     // catches and brings to home page
     $urlRouterProvider.otherwise('/bracelet/home');
@@ -66,20 +54,14 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
     };
 
     o.getAll = function() {
-        return $http.get('/api/posts').success(function(data) {
+        return $http.get('/api/').success(function(data) {
+            console.log(data);
             angular.copy(data, o.posts);
         });
     };
 
-    o.get = function(id) { // clicking a specific post
-        return $http.get('/api/posts/' + id)
-            .success(function(data) {
-                angular.copy(data, o.posts);
-            });
-    };
-
     o.createPost = function(post) {
-        return $http.post('/api/posts/', post, {
+        return $http.post('/api/', post, {
             headers: {
                 Authorization: 'Bearer ' + auth.getToken()
             }
@@ -88,7 +70,6 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
             angular.copy(data, o.posts); // this is required to see the updated DOM!
         });
     };
-
 
     o.deletePost = function(id) {
         return $http.delete('/api/posts/' + id, {
@@ -121,7 +102,8 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
     $scope.$state = $state;
     $scope.currentNavItemArray = window.location.href.match(/#\/bracelet\/(\w+)/); // reads from the URL to find the current state to be used in md-nav-bar
     $scope.currentNavItem = $scope.currentNavItemArray[1];
-
+    $scope.apiData = postsFactory.getAll();
+    console.log($scope.apiData.posts);
     $scope.items = [
         "Show Allergies",
         "Show Name",
@@ -221,8 +203,7 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
     }, ];
 
 
-    // TODO trust posts as HTML for formatting
-    $scope.posts = postsFactory.posts; // pulls posts from factory into scope
+
     $scope.formData = {}; // initializes form
 
     $scope.addPost = function() {
@@ -271,13 +252,6 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
         });
     };
 
-})
-
-
-.config(function($mdThemingProvider, $mdIconProvider) {
-    $mdThemingProvider.theme('forest') // to create themes (possibly modular for the user later)
-        .primaryPalette('brown')
-        .accentPalette('green');
 })
 
 .directive('userAvatar', function() {
