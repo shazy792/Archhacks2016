@@ -25,7 +25,8 @@ app.use(bodyParser.json());
 //app.use(bodyParser.json({type:'application/vnd.api+json'}));
 app.use(methodOverride());
 
-mongoose.connect("mongodb://localhost/bracelets");
+//mongoose.connect("mongodb://localhost/bracelets");
+mongoose.connect("mongodb://bracelets:archhacks2016@jello.modulusmongo.net:27017/zimisu7S");
 
 // This is the mongo model - Change this!
 var Restapi = app.restapi = restful.model('bracelet', mongoose.Schema({
