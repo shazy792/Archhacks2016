@@ -120,7 +120,7 @@ app.get('/',function(req, res){
 	res.send('home.html');
 });
 
-app.post('message', function(req, res){
+app.post('/message', function(req, res){
 	console.log(req.body.Body);
 	console.log(req.body.From);
 	res.send("<Response><Message>" + request.body.Body + " Recieved.</Message></Response>");
