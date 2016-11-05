@@ -31,15 +31,15 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
             //     }]
             // }
         })
-        .state('bracelet.login', {
-                url: '/login',
-                templateUrl: 'partials/bracelet-login.html',
+        .state('bracelet.records', {
+                url: '/records',
+                templateUrl: 'partials/bracelet-records.html',
 
             })
 
-        .state('bracelet.about', {
-            url: '/about',
-            templateUrl: 'partials/bracelet-about.html',
+        .state('bracelet.privacy', {
+            url: '/privacy',
+            templateUrl: 'partials/bracelet-privacy.html',
         })
         .state('bracelet.new', {
             url: '/new',
