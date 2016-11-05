@@ -115,6 +115,14 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
         $scope.$state = $state;
         $scope.currentNavItemArray = window.location.href.match(/#\/bracelet\/(\w+)/); // reads from the URL to find the current state to be used in md-nav-bar
         $scope.currentNavItem = $scope.currentNavItemArray[1];
+
+        $scope.items = [
+          "Show Allergies",
+          "Show Name",
+          "Show Blood-Type",
+          "Show Medical History"
+        ];
+
         var imagePath = 'img/LOGO.png';
         $scope.phones = [
              {
