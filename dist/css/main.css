@@ -138,6 +138,11 @@ md-fab-speed-dial.md-fab-bottom-right .fa {
   -moz-animation: slideOutLeft 0.5s both ease;
   animation: slideOutLeft 0.5s both ease; }
 
+#loginPage {
+  text-align: center;
+  width: 75%;
+  margin: 0 auto; }
+
 /* ANIMATION KEYFRAMES
   ============================================================================= */
 @keyframes slideOutLeft {
