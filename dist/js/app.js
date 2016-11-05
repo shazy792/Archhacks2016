@@ -32,12 +32,12 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
             // }
         })
         .state('bracelet.records', {
-                url: '/records',
-                templateUrl: 'partials/bracelet-records.html',
+            url: '/records',
+            templateUrl: 'partials/bracelet-records.html',
 
-            })
+        })
 
-        .state('bracelet.privacy', {
+    .state('bracelet.privacy', {
             url: '/privacy',
             templateUrl: 'partials/bracelet-privacy.html',
         })
@@ -61,191 +61,217 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
 
 .factory('postsFactory', function($http) {
 
-        var o = {
-            posts: []
-        };
+    var o = {
+        posts: []
+    };
 
-        o.getAll = function() {
-            return $http.get('/api/posts').success(function(data) {
-                angular.copy(data, o.posts);
-            });
-        };
+    o.getAll = function() {
+        return $http.get('/api/posts').success(function(data) {
+            angular.copy(data, o.posts);
+        });
+    };
 
-        o.get = function(id) { // clicking a specific post
-            return $http.get('/api/posts/' + id)
+    o.get = function(id) { // clicking a specific post
+        return $http.get('/api/posts/' + id)
             .success(function(data) {
                 angular.copy(data, o.posts);
             });
-        };
+    };
 
-        o.createPost = function(post) {
-            return $http.post('/api/posts/', post, {
-              headers: {Authorization: 'Bearer ' + auth.getToken()}
-            }).success(function(data) {
-                o.posts.push(data);
-                angular.copy(data, o.posts); // this is required to see the updated DOM!
-            });
-        };
-
-
-        o.deletePost = function(id) {
-            return $http.delete('/api/posts/' + id, {
-              headers: {Authorization: 'Bearer ' + auth.getToken()}
-            }).success(function(data) {
-                angular.copy(data, o.posts);
-            }); // in progress
-        };
-
-        o.editPost = function(id, edit) {
-            return $http.put('/api/posts/' + id, edit, {
-              headers: {Authorization: 'Bearer ' + auth.getToken()}
-            }).success(function(data) {
-                angular.copy(data, o.posts);
-            });
-        };
-        return o;
-
-    })
-
-    // authorization factory
-
-    // app controller
-    .controller('braceletCtrl', function($scope, $state, $http, postsFactory) { // injecting state to use 'ng-if' on $state.current.name
-
-        $scope.$state = $state;
-        $scope.currentNavItemArray = window.location.href.match(/#\/bracelet\/(\w+)/); // reads from the URL to find the current state to be used in md-nav-bar
-        $scope.currentNavItem = $scope.currentNavItemArray[1];
-
-        $scope.items = [
-          "Show Allergies",
-          "Show Name",
-          "Show Blood-Type",
-          "Show Medical History"
-        ];
-
-        var imagePath = 'img/LOGO.png';
-        $scope.phones = [
-             {
-               type: 'Home',
-               number: '(555) 251-1234',
-               options: {
-                 icon: 'communication:phone'
-               }
-             },
-             {
-               type: 'Cell',
-               number: '(555) 786-9841',
-               options: {
-                 icon: 'communication:phone',
-                 avatarIcon: true
-               }
-             },
-             {
-               type: 'Office',
-               number: '(555) 314-1592',
-               options: {
-                 face : imagePath
-               }
-             },
-             {
-               type: 'Offset',
-               number: '(555) 192-2010',
-               options: {
-                 offset: true,
-                 actionIcon: 'communication:phone'
-               }
-             }
-           ];
-           $scope.todos = [
-             {
-               face : imagePath,
-               what: 'Allergy Altert',
-               who: 'Some Guy',
-               when: '3:08PM',
-               notes: " Use Epi-Pen Mounted to my Belt "
-             },
-             {
-               face : imagePath,
-               what: 'Allergy Altert',
-               who: 'Some Guy',
-               when: '3:08PM',
-               notes: " Use Epi-Pen Mounted to my Belt "
-             },
-             {
-               face : imagePath,
-               what: 'Allergy Altert',
-               who: 'Some Guy',
-               when: '3:08PM',
-               notes: " Use Epi-Pen Mounted to my Belt "
-             },
-             {
-               face : imagePath,
-               what: 'Allergy Altert',
-               who: 'Some Guy',
-               when: '3:08PM',
-               notes: " Use Epi-Pen Mounted to my Belt "
-             },
-             {
-               face : imagePath,
-               what: 'Allergy Altert',
-               who: 'Some Guy',
-               when: '3:08PM',
-               notes: " Use Epi-Pen Mounted to my Belt "
-             },
-           ];
-
-
-        // TODO trust posts as HTML for formatting
-        $scope.posts = postsFactory.posts; // pulls posts from factory into scope
-        $scope.formData = {}; // initializes form
-
-        $scope.addPost = function() {
-            postsFactory.createPost($scope.formData);
-            $scope.formData = {};
-        };
-        $scope.deletePost = function(id) {
-            var r = confirm("Are you sure you want to delete this post?");
-            if (r === true) {
-                postsFactory.deletePost(id);
-            } else {
-                alert("Not deleted");
+    o.createPost = function(post) {
+        return $http.post('/api/posts/', post, {
+            headers: {
+                Authorization: 'Bearer ' + auth.getToken()
             }
+        }).success(function(data) {
+            o.posts.push(data);
+            angular.copy(data, o.posts); // this is required to see the updated DOM!
+        });
+    };
 
-        };
-        $scope.updatePost = function(id, newTitle, newBody) {
-            $scope.newPost = {};
-            $scope.newPost.title = newTitle;
-            $scope.newPost.body = newBody;
-            var r = confirm("Are you sure you want to edit this post?");
-            if (r === true) {
-              postsFactory.editPost(id, $scope.newPost);
-            } else {
-                alert("Not deleted");
+
+    o.deletePost = function(id) {
+        return $http.delete('/api/posts/' + id, {
+            headers: {
+                Authorization: 'Bearer ' + auth.getToken()
             }
-        };
+        }).success(function(data) {
+            angular.copy(data, o.posts);
+        }); // in progress
+    };
 
-    })
-
-    .controller('authCtrl', function($scope, $state, auth) { // injecting state to use 'ng-if' on $state.current.name
-      $scope.user = {};
-
-      $scope.register = function(){
-        auth.register($scope.user).error(function(error){
-          $scope.error = error;
-        }).then(function(){
-          $state.go('bracelet.home');
+    o.editPost = function(id, edit) {
+        return $http.put('/api/posts/' + id, edit, {
+            headers: {
+                Authorization: 'Bearer ' + auth.getToken()
+            }
+        }).success(function(data) {
+            angular.copy(data, o.posts);
         });
-      };
+    };
+    return o;
 
-      $scope.logIn = function(){
-        auth.logIn($scope.user).error(function(error){
-          $scope.error = error;
-        }).then(function(){
-          $state.go('bracelet.home');
+})
+
+// authorization factory
+
+// app controller
+.controller('braceletCtrl', function($scope, $state, $http, postsFactory) { // injecting state to use 'ng-if' on $state.current.name
+
+    $scope.$state = $state;
+    $scope.currentNavItemArray = window.location.href.match(/#\/bracelet\/(\w+)/); // reads from the URL to find the current state to be used in md-nav-bar
+    $scope.currentNavItem = $scope.currentNavItemArray[1];
+
+    $scope.items = [
+        "Show Allergies",
+        "Show Name",
+        "Show Blood-Type",
+        "Show Medical History"
+    ];
+
+    var imagePath = 'img/LOGO.png';
+    $scope.issues = [{
+        company: 'Peanut Reaction',
+        location: 'Toronto, Ontario',
+        when: 'Apr 23 , 2016',
+        notes: "Saved W Epi Pen"
+    }, {
+        company: 'Peanut Reaction',
+        location: 'Toronto, Ontario',
+        when: 'Apr 23 , 2016',
+        notes: "Saved W Epi Pen"
+    },{
+        company: 'Peanut Reaction',
+        location: 'Toronto, Ontario',
+        when: 'Apr 23 , 2016',
+        notes: "Saved W Epi Pen"
+    },{
+        company: 'Peanut Reaction',
+        location: 'Toronto, Ontario',
+        when: 'Apr 23 , 2016',
+        notes: "Saved W Epi Pen"
+    },{
+        company: 'Peanut Reaction',
+        location: 'Toronto, Ontario',
+        when: 'Apr 23 , 2016',
+        notes: "Saved W Epi Pen"
+    },{
+        company: 'Peanut Reaction',
+        location: 'Toronto, Ontario',
+        when: 'Apr 23 , 2016',
+        notes: "Saved W Epi Pen"
+    }];
+    $scope.phones = [{
+        type: 'Home',
+        number: '(555) 251-1234',
+        options: {
+            icon: 'communication:phone'
+        }
+    }, {
+        type: 'Cell',
+        number: '(555) 786-9841',
+        options: {
+            icon: 'communication:phone',
+            avatarIcon: true
+        }
+    }, {
+        type: 'Office',
+        number: '(555) 314-1592',
+        options: {
+            face: imagePath
+        }
+    }, {
+        type: 'Offset',
+        number: '(555) 192-2010',
+        options: {
+            offset: true,
+            actionIcon: 'communication:phone'
+        }
+    }];
+    $scope.todos = [{
+        face: imagePath,
+        what: 'Allergy Altert',
+        who: 'Some Guy',
+        when: '3:08PM',
+        notes: " Use Epi-Pen Mounted to my Belt "
+    }, {
+        face: imagePath,
+        what: 'Allergy Altert',
+        who: 'Some Guy',
+        when: '3:08PM',
+        notes: " Use Epi-Pen Mounted to my Belt "
+    }, {
+        face: imagePath,
+        what: 'Allergy Altert',
+        who: 'Some Guy',
+        when: '3:08PM',
+        notes: " Use Epi-Pen Mounted to my Belt "
+    }, {
+        face: imagePath,
+        what: 'Allergy Altert',
+        who: 'Some Guy',
+        when: '3:08PM',
+        notes: " Use Epi-Pen Mounted to my Belt "
+    }, {
+        face: imagePath,
+        what: 'Allergy Altert',
+        who: 'Some Guy',
+        when: '3:08PM',
+        notes: " Use Epi-Pen Mounted to my Belt "
+    }, ];
+
+
+    // TODO trust posts as HTML for formatting
+    $scope.posts = postsFactory.posts; // pulls posts from factory into scope
+    $scope.formData = {}; // initializes form
+
+    $scope.addPost = function() {
+        postsFactory.createPost($scope.formData);
+        $scope.formData = {};
+    };
+    $scope.deletePost = function(id) {
+        var r = confirm("Are you sure you want to delete this post?");
+        if (r === true) {
+            postsFactory.deletePost(id);
+        } else {
+            alert("Not deleted");
+        }
+
+    };
+    $scope.updatePost = function(id, newTitle, newBody) {
+        $scope.newPost = {};
+        $scope.newPost.title = newTitle;
+        $scope.newPost.body = newBody;
+        var r = confirm("Are you sure you want to edit this post?");
+        if (r === true) {
+            postsFactory.editPost(id, $scope.newPost);
+        } else {
+            alert("Not deleted");
+        }
+    };
+
+})
+
+.controller('authCtrl', function($scope, $state, auth) { // injecting state to use 'ng-if' on $state.current.name
+    $scope.user = {};
+
+    $scope.register = function() {
+        auth.register($scope.user).error(function(error) {
+            $scope.error = error;
+        }).then(function() {
+            $state.go('bracelet.home');
         });
-      };
+    };
 
-    })
+    $scope.logIn = function() {
+        auth.logIn($scope.user).error(function(error) {
+            $scope.error = error;
+        }).then(function() {
+            $state.go('bracelet.home');
+        });
+    };
+
+})
 
 
 .config(function($mdThemingProvider, $mdIconProvider) {

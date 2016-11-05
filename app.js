@@ -43,7 +43,7 @@ var Restapi = app.restapi = restful.model('bracelet', mongoose.Schema({
   }
 
 
-// Registers the REST on /resources 
+// Registers the REST on /resources
 Restapi.register(app, '/api');
 
 app.listen(3000, function(){
