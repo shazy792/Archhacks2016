@@ -1,1 +1,53 @@
-<div ui-view></div>
+<md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+    <md-nav-item md-nav-sref="bracelet.home" name="home">
+        <span class="nav-large">Home</span>
+        <span class="nav-small"><i class="fa fa-home" aria-hidden="true"></i></span>
+    </md-nav-item>
+    <md-nav-item md-nav-sref="bracelet.posts" name="posts">
+        <span class="nav-large">Profile</span>
+        <span class="nav-small"><i class="fa fa-desktop" aria-hidden="true"></i></span>
+    </md-nav-item>
+    <md-nav-item md-nav-sref="bracelet.about" name="about">
+        <span class="nav-large">Edit Settings</span>
+        <span class="nav-small"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
+    </md-nav-item>
+    <md-nav-item md-nav-sref="bracelet.profile" name="about">
+        <span class="nav-large">Connect</span>
+        <span class="nav-small"><i class="fa fa-lightbulb-o" aria-hidden="true"></i></span>
+    </md-nav-item>
+    <md-nav-item ng-show="isLoggedIn()" md-nav-sref="bracelet.new" name="new">
+        <span class="nav-large">New Post</span>
+        <span class="nav-small"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
+    </md-nav-item>
+    <!-- <md-nav-item ng-hide="isLoggedIn()" md-nav-sref="bracelet.register" name="register">
+        <span class="nav-large">Register</span>
+        <span class="nav-small"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
+    </md-nav-item> --> <!-- HERE FOR REGISTERING USERS (NOT NEEDED FOR SINGLE USER -->
+    <!-- <md-nav-item ng-hide="isLoggedIn()" md-nav-sref="bracelet.adminlogin" name="login">
+        <span class="nav-large">Login</span>
+        <span class="nav-small"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
+    </md-nav-item> also hidden for public -->
+    <md-nav-item ng-show="isLoggedIn()" md-nav-click="logOut()" name="logout">
+        <span class="nav-large">Logout</span>
+        <span class="nav-small"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
+    </md-nav-item>
+</md-nav-bar>
+
+
+<div id="main-container">
+    <div id="pages" ui-view></div>
+</div>
+
+
+<md-fab-speed-dial md-open="false" md-direction="left" class="md-scale md-fab-bottom-right">
+    <md-fab-trigger>
+        <md-button aria-label="menu" class="md-fab md-warn">
+            <i class="fa fa-phone" aria-hidden="true"></i>
+        </md-button>
+    </md-fab-trigger>
+    <md-fab-actions>
+        <md-button md-colors="{background: 'red'}" aria-label="Contact" class="md-fab md-raised md-mini">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+        </md-button>
+    </md-fab-actions>
+</md-fab-speed-dial>

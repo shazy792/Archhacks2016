@@ -31,15 +31,15 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
                 }]
             }
         })
-        .state('bracelet.adminlogin', {
-                url: '/adminlogin',
+        .state('bracelet.login', {
+                url: '/login',
                 templateUrl: 'partials/bracelet-login.html',
                 controller: 'authCtrl',
-                onEnter: ['$state', 'auth', function($state, auth){
-                  if(auth.isLoggedIn()){
-                    $state.go('bracelet.home');
-                  }
-                }]
+                // onEnter: ['$state', 'auth', function($state, auth){
+                //   if(auth.isLoggedIn()){
+                //     $state.go('bracelet.home');
+                //   }
+                // }]
             })
 
         .state('bracelet.about', {

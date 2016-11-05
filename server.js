@@ -8,7 +8,10 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override'); // lets us use PUT and DELETE even if client doesn't support it
 
 
+
+
 app.use(express.static(__dirname + '/dist')); // set the static files location /public/img will be /img for users
+
 
 // configure the app to use bodyParser()
 app.use(bodyParser.urlencoded({
