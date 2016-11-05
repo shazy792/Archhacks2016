@@ -16,20 +16,20 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
     .state('bracelet.home', {
             url: '/home',
             templateUrl: 'partials/bracelet-home.html',
-            resolve: { // automatically queries all posts before state finishing loading!!
-                postPromise: ['postsFactory', function(posts) {
-                    return posts.getAll();
-                }]
-            }
+            // resolve: { // automatically queries all posts before state finishing loading!!
+            //     postPromise: ['postsFactory', function(posts) {
+            //         return posts.getAll();
+            //     }]
+            // }
         })
-        .state('bracelet.posts', {
-            url: '/posts',
-            templateUrl: 'partials/bracelet-posts.html',
-            resolve: { // automatically queries all posts before state finishing loading!!
-                postPromise: ['postsFactory', function(posts) {
-                    return posts.getAll();
-                }]
-            }
+        .state('bracelet.profile', {
+            url: '/profile',
+            templateUrl: 'partials/bracelet-profile.html',
+            // resolve: { // automatically queries all posts before state finishing loading!!
+            //     postPromise: ['postsFactory', function(posts) {
+            //         return posts.getAll();
+            //     }]
+            // }
         })
         .state('bracelet.login', {
                 url: '/login',
@@ -115,6 +115,76 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
         $scope.$state = $state;
         $scope.currentNavItemArray = window.location.href.match(/#\/bracelet\/(\w+)/); // reads from the URL to find the current state to be used in md-nav-bar
         $scope.currentNavItem = $scope.currentNavItemArray[1];
+        var imagePath = 'img/LOGO.png';
+        $scope.phones = [
+             {
+               type: 'Home',
+               number: '(555) 251-1234',
+               options: {
+                 icon: 'communication:phone'
+               }
+             },
+             {
+               type: 'Cell',
+               number: '(555) 786-9841',
+               options: {
+                 icon: 'communication:phone',
+                 avatarIcon: true
+               }
+             },
+             {
+               type: 'Office',
+               number: '(555) 314-1592',
+               options: {
+                 face : imagePath
+               }
+             },
+             {
+               type: 'Offset',
+               number: '(555) 192-2010',
+               options: {
+                 offset: true,
+                 actionIcon: 'communication:phone'
+               }
+             }
+           ];
+           $scope.todos = [
+             {
+               face : imagePath,
+               what: 'Brunch this weekend?',
+               who: 'Min Li Chan',
+               when: '3:08PM',
+               notes: " I'll be in your neighborhood doing errands"
+             },
+             {
+               face : imagePath,
+               what: 'Brunch this weekend?',
+               who: 'Min Li Chan',
+               when: '3:08PM',
+               notes: " I'll be in your neighborhood doing errands"
+             },
+             {
+               face : imagePath,
+               what: 'Brunch this weekend?',
+               who: 'Min Li Chan',
+               when: '3:08PM',
+               notes: " I'll be in your neighborhood doing errands"
+             },
+             {
+               face : imagePath,
+               what: 'Brunch this weekend?',
+               who: 'Min Li Chan',
+               when: '3:08PM',
+               notes: " I'll be in your neighborhood doing errands"
+             },
+             {
+               face : imagePath,
+               what: 'Brunch this weekend?',
+               who: 'Min Li Chan',
+               when: '3:08PM',
+               notes: " I'll be in your neighborhood doing errands"
+             },
+           ];
 
 
         // TODO trust posts as HTML for formatting
