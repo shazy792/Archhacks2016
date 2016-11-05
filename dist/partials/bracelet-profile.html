@@ -1,0 +1,25 @@
+<md-card md-colors="::{backgroundColor: 'default-primary-700'}">
+    <md-card-title>
+        <md-card-title-media>
+            <div class="md-media-sm card-media" layout layout-align="center center" md-colors="::{background: 'default-accent'}">
+                <md-icon md-svg-src="/img/white.svg"></md-icon>
+            </div>
+        </md-card-title-media>
+        <md-card-title-text>
+            <span class="md-headline">John Doe</span>
+            <span id="intro-caption" class="md-subhead description"><i class="fa fa-map-marker" aria-hidden="true"></i><em>&nbsp; Toronto, Ontario</em></span>
+        </md-card-title-text>
+    </md-card-title>
+</md-card>
+
+<md-content>
+    <md-list flex>
+        <md-list-item class="md-3-line" ng-repeat="item in todos" ng-click="null">
+            <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
+            <div class="md-list-item-text" layout="column">
+                <h3>{{ item.who }}</h3>
+                <h4>{{ item.what }}</h4>
+                <p>{{ item.notes }}</p>
+            </div>
+        </md-list-item>
+</md-content>
