@@ -151,38 +151,38 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
            $scope.todos = [
              {
                face : imagePath,
-               what: 'Brunch this weekend?',
-               who: 'Min Li Chan',
+               what: 'Allergy Altert',
+               who: 'Some Guy',
                when: '3:08PM',
-               notes: " I'll be in your neighborhood doing errands"
+               notes: " Use Epi-Pen Mounted to my Belt "
              },
              {
                face : imagePath,
-               what: 'Brunch this weekend?',
-               who: 'Min Li Chan',
+               what: 'Allergy Altert',
+               who: 'Some Guy',
                when: '3:08PM',
-               notes: " I'll be in your neighborhood doing errands"
+               notes: " Use Epi-Pen Mounted to my Belt "
              },
              {
                face : imagePath,
-               what: 'Brunch this weekend?',
-               who: 'Min Li Chan',
+               what: 'Allergy Altert',
+               who: 'Some Guy',
                when: '3:08PM',
-               notes: " I'll be in your neighborhood doing errands"
+               notes: " Use Epi-Pen Mounted to my Belt "
              },
              {
                face : imagePath,
-               what: 'Brunch this weekend?',
-               who: 'Min Li Chan',
+               what: 'Allergy Altert',
+               who: 'Some Guy',
                when: '3:08PM',
-               notes: " I'll be in your neighborhood doing errands"
+               notes: " Use Epi-Pen Mounted to my Belt "
              },
              {
                face : imagePath,
-               what: 'Brunch this weekend?',
-               who: 'Min Li Chan',
+               what: 'Allergy Altert',
+               who: 'Some Guy',
                when: '3:08PM',
-               notes: " I'll be in your neighborhood doing errands"
+               notes: " Use Epi-Pen Mounted to my Belt "
              },
            ];
 
