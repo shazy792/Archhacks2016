@@ -9,13 +9,8 @@ var methodOverride = require('method-override'); // lets us use PUT and DELETE e
 
 
 
-
-var auth = jwt({secret: process.env.SECRET, userProperty: 'payload'});
-
-
-
 app.use(express.static(__dirname + '/dist')); // set the static files location /public/img will be /img for users
-app.use(passport.initialize());
+
 
 // configure the app to use bodyParser()
 app.use(bodyParser.urlencoded({
