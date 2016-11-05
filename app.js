@@ -115,6 +115,10 @@ function isAdmin(req, res, next){
 Restapi.register(app, '/api/rest');
 Userapi.register(app, '/api/auth');
 
-app.listen(3000, function(){
+app.get('/',function(req, res){
+	res.send('home.html');
+});
+
+app.listen(process.env.PORT || 3222, function(){
 	console.log("Server Started");
 });
