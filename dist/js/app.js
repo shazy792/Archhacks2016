@@ -41,17 +41,7 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
                   }
                 }]
             })
-        // .state('bracelet.register', {
-        //     url: '/register',
-        //     templateUrl: 'partials/bracelet-register.html',
-        //     controller: 'authCtrl',
-        //     onEnter: ['$state', 'auth', function($state, auth){
-        //       if(auth.isLoggedIn()){
-        //         $state.go('bracelet.home');
-        //       }
-        //     }]
-        // })
-        // TODO
+
         .state('bracelet.about', {
             url: '/about',
             templateUrl: 'partials/bracelet-about.html',
@@ -74,7 +64,7 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
     $urlRouterProvider.otherwise('/bracelet/home');
 })
 
-.factory('postsFactory', function($http, auth) {
+.factory('postsFactory', function($http) {
 
         var o = {
             posts: []
@@ -123,67 +113,13 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
     })
 
     // authorization factory
-    .factory('auth', function($http,$window){
-      var auth = {};
 
-      auth.saveToken = function(token){
-        $window.localStorage['cdok-bracelet-token'] = token;
-      };
-
-      auth.getToken = function(){
-        return $window.localStorage['cdok-bracelet-token'];
-      };
-
-      auth.isLoggedIn = function(){
-        var token = auth.getToken();
-
-        if(token){
-          var payload = JSON.parse($window.atob(token.split('.')[1]));
-
-          return payload.exp > Date.now() / 1000;
-        } else {
-          return false;
-        }
-      };
-
-      auth.currentUser = function(){
-        if(auth.isLoggedIn()){
-        var token = auth.getToken();
-        var payload = JSON.parse($window.atob(token.split('.')[1]));
-
-        return payload.username;
-      }
-    };
-
-    auth.register = function(user){
-      return $http.post('/api/register', user).success(function(data){
-        auth.saveToken(data.token);
-      });
-    };
-
-    auth.logIn = function(user){
-      return $http.post('/api/login', user).success(function(data){
-        auth.saveToken(data.token);
-      });
-    };
-
-    auth.logOut = function(){
-      $window.localStorage.removeItem('cdok-bracelet-token');
-    };
-
-    return auth;
-
-    })
     // app controller
-    .controller('braceletCtrl', function($scope, $state, $http, postsFactory, auth, staticFactory) { // injecting state to use 'ng-if' on $state.current.name
+    .controller('braceletCtrl', function($scope, $state, $http, postsFactory) { // injecting state to use 'ng-if' on $state.current.name
 
         $scope.$state = $state;
         $scope.currentNavItemArray = window.location.href.match(/#\/bracelet\/(\w+)/); // reads from the URL to find the current state to be used in md-nav-bar
         $scope.currentNavItem = $scope.currentNavItemArray[1];
-        $scope.isLoggedIn = auth.isLoggedIn;
-
-        $scope.currentUser = auth.currentUser;
-        $scope.logOut = auth.logOut;
 
 
         // TODO trust posts as HTML for formatting
