@@ -1,3 +1,5 @@
+var doThis;
+var imagePath = 'img/LOGO.png';
 angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -82,7 +84,6 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
               Authorization: 'Bearer ' + auth.getToken()
           }
       }).success(function(data) {
-          console.log(data);
             angular.copy(data, o.posts);
         });
     };
@@ -178,7 +179,7 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
     })
     // app controller
     .controller('braceletCtrl', function($scope, $state, $http, postsFactory, auth) { // injecting state to use 'ng-if' on $state.current.name
-
+        $scope.imagePath = 'img/LOGO.png';
         $scope.$state = $state;
         $scope.currentNavItemArray = window.location.href.match(/#\/bracelet\/(\w+)/); // reads from the URL to find the current state to be used in md-nav-bar
         $scope.currentNavItem = $scope.currentNavItemArray[1];
@@ -189,6 +190,7 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
 
 
         // TODO trust posts as HTML for formatting
+        postsFactory.getAll();
         $scope.posts = postsFactory.posts; // pulls posts from factory into scope
         $scope.formData = {}; // initializes form
 
@@ -225,7 +227,7 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
             "Show Medical History"
         ];
 
-        var imagePath = 'img/LOGO.png';
+
 
         $scope.issues = [{
             company: 'Peanut Reaction',
@@ -235,8 +237,8 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
         }, {
             company: 'Cat Itchiness',
             location: 'Toronto, Ontario',
-            when: 'Apr 23 , 2016',
-            notes: "Saved W Epi Pen"
+            when: 'Mar 23 , 2016',
+            notes: ""
         }, {
             company: 'Peanut Reaction',
             location: 'Toronto, Ontario',
