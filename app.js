@@ -44,7 +44,7 @@ var Restapi = app.restapi = restful.model('bracelet', mongoose.Schema({
   }))
   .methods(['get', 'post', 'put', 'delete']);
 
-Restapi.before('get', isAdmin);
+//Restapi.before('get', isAdmin);
 
 Restapi.route('sendtext.get', function(req, res, next){
 	client.messages.create({
@@ -115,7 +115,7 @@ Userapi.after('post', function(req, res, next){
 });
 
 Userapi.route('login.post', function(req, res, next){
-	//res.status(200).send();
+	res.status(200).send();
 	Userapi.findOne({
 		username: req.body.username
 	}, function(err, user){
@@ -151,6 +151,7 @@ function isAdmin(req, res, next){
 				console.log(err);
 				res.json({success: false, message: "Authentication failed"});
 			} else {
+				res.json({success: true, message: "Logged in"});
 				next(); // verified jwt
 			}
 		});
