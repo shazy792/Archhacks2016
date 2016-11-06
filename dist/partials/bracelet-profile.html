@@ -13,35 +13,36 @@
             </div>
         </md-card-title-media>
         <md-card-title-text>
-            <span class="md-headline">John Doe</span>
+            <span class="md-headline">{{posts[0].name}}</span>
             <span id="intro-caption" class="md-subhead description"><i class="fa fa-map-marker" aria-hidden="true"></i><em>&nbsp; Toronto, Ontario</em></span>
         </md-card-title-text>
     </md-card-title>
 </md-card>
 
-<md-content>
+<md-content layout-padding>
     <md-list flex>
-        <md-list-item class="md-3-line" ng-repeat="item in todos" ng-click="null">
-            <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
+        <md-list-item class="md-3-line" ng-click="null"> <!--  ng-repeat="item in posts"  -->
+            <img src="{{imagePath}}" class="md-avatar" alt="{{item.who}}" />
             <div class="md-list-item-text" layout="column">
-                <h3>{{ item.who }}</h3>
-                <h4>{{ item.what }}</h4>
-                <p>{{ item.notes }}</p>
+                <h3>{{ posts[0].age }} years old</h3>
+                <h4>Height: {{ posts[0].height }}, Weight: {{ posts[0].weight }}</h4>
+                <p></p>
             </div>
         </md-list-item>
 </md-content>
-<br><br>
-<md-toolbar md-scroll-shrink ng-if="true">
+<div id="padme">
+<md-toolbar ng-show="isLoggedIn()" md-scroll-shrink ng-if="true">
    <div class="md-toolbar-tools">
      <h3>
        <span>Privacy Settings</span>
      </h3>
    </div>
  </md-toolbar>
-<md-content layout="column" layout-padding>
+<md-content ng-show="isLoggedIn()" layout="column" layout-padding>
 <div class="demo-select-all-checkboxes" flex="100" ng-repeat="item in items">
     <md-checkbox>
         {{ item }}
     </md-checkbox>
 </div>
 </md-content>
+</div>
