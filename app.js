@@ -38,7 +38,9 @@ var Restapi = app.restapi = restful.model('bracelet', mongoose.Schema({
     btype: String,
     allergies: [],
     pproblems: [],
-    emergency: String
+    emergency: String,
+    phone: String,
+    medremind: Number
   }))
   .methods(['get', 'post', 'put', 'delete']);
 
