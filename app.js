@@ -44,7 +44,7 @@ var Restapi = app.restapi = restful.model('bracelet', mongoose.Schema({
   }))
   .methods(['get', 'post', 'put', 'delete']);
 
-Restapi.before('get', isAdmin);
+//Restapi.before('get', isAdmin);
 
 Restapi.route('sendtext.get', function(req, res, next){
 	client.messages.create({
@@ -65,6 +65,7 @@ Restapi.route('arduino', function(req, res, next){
 	Restapi.findOne({
 		rfid: req.query.rfid
 	}, function(err, user){
+<<<<<<< HEAD
 		if (err) throw err;
 
 
@@ -72,8 +73,16 @@ Restapi.route('arduino', function(req, res, next){
 		var age = user.age ? user.age : "";
 		var weight = user.weight ? user.weight : "";
 
+=======
+		if (err) console.log(err);
+		//if (err) throw err;
+		
+		var name = user.name ? user.name : "";
+		var age = user.age ? user.age : "";
+		var weight = user.weight ? user.weight : "";
+>>>>>>> 1b7a4091a9d7c277dfc898327e1d509d6f0bbe62
 		if (user){
-			res.send("name: " + user.name + "\nage:" + user.age + "\nweight:" + user.weight);
+			res.send("name: " + user.name + "age:" + user.age + "weight:" + user.weight);
 		} else {
 			res.send("Not a user");
 		}
@@ -117,7 +126,7 @@ Userapi.after('post', function(req, res, next){
 });
 
 Userapi.route('login.post', function(req, res, next){
-	//res.status(200).send();
+	res.status(200).send();
 	Userapi.findOne({
 		username: req.body.username
 	}, function(err, user){
@@ -153,6 +162,7 @@ function isAdmin(req, res, next){
 				console.log(err);
 				res.json({success: false, message: "Authentication failed"});
 			} else {
+				res.json({success: true, message: "Logged in"});
 				next(); // verified jwt
 			}
 		});
