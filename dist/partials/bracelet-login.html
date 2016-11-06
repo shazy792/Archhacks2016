@@ -1,8 +1,8 @@
 <md-content id="loginPage" layout="column" layout-padding>
     <div>
-      <div flex="33">
-        <img src="/img/LOGO.png" alt="">
-      </div>
+        <div flex="33">
+            <img src="/img/LOGO.png" alt="">
+        </div>
         <form name="userForm">
             <md-input-container class="md-block">
                 <label>Username</label>
@@ -13,10 +13,10 @@
                     <label>Password</label>
                     <input type="password" ng-model="user.password">
                 </md-input-container>
-  <br>
-  </md-content>
-  <md-content layout="column" layout-padding>
-                <md-button ui-sref="bracelet.profile" class="md-raised md-warn">Login</md-button>
-        </form>
-        </div>
+                <br>
+</md-content>
+<md-content layout="column" layout-padding>
+    <md-button ng-click="logIn()" class="md-raised md-warn">Login</md-button>
+    </form>
+    </div>
 </md-content>
