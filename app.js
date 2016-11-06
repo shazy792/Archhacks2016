@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(methodOverride());
 
 //mongoose.connect("mongodb://localhost/bracelets");
-mongoose.connect("mongodb://bracelets:archhacks2016@jello.modulusmongo.net:27017/zimisu7S");
+mongoose.connect("mongodb://bracelets:archhacks2016@jello.modulusmongo.net:27017/igosop2E");
 
 // This is the mongo model - Change this!
 var Restapi = app.restapi = restful.model('bracelet', mongoose.Schema({
@@ -66,9 +66,16 @@ Restapi.route('arduino', function(req, res, next){
 		rfid: req.query.rfid
 	}, function(err, user){
 		if (err) throw err;
+<<<<<<< HEAD
 
+=======
+		
+		var name = user.name ? user.name : "";
+		var age = user.age ? user.age : "";
+		var weight = user.weight ? user.weight : "";
+>>>>>>> 60a165a7dc175fb1e826d66cc7d91396e613de4e
 		if (user){
-			res.send("weight: " + user.weight);
+			res.send("name: " + user.name + "\nage:" + user.age + "\nweight:" + user.weight);
 		} else {
 			res.send("Not a user");
 		}
