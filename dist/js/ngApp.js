@@ -16,7 +16,7 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
     .state('bracelet.admin', {
             url: '/admin',
             templateUrl: 'partials/bracelet-admin.html',
-        
+
         })
     // children states of bracelet
     .state('bracelet.emergency', {
@@ -196,6 +196,8 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
         // TODO trust posts as HTML for formatting
         postsFactory.getAll();
         $scope.posts = postsFactory.posts; // pulls posts from factory into scope
+        doThis = $scope.posts;
+        console.log(doThis[0]);
         $scope.formData = {}; // initializes form
 
         $scope.addPost = function() {
