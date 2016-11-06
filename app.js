@@ -173,9 +173,31 @@ Restapi.register(app, '/api/rest');
 Userapi.register(app, '/api/auth');
 
 app.post('/message', function(req, res){
-	console.log(req.body.Body);
-	console.log(req.body.From);
-	res.send("<Response><Message>" + req.body.Body + " Recieved.</Message></Response>");
+	
+	var resp;
+	if (req.body.Body === "1"){
+		resp = 'Thankyou';
+	} else if (req.body.Body === "2"){
+		resp = "Your emergency contact has been contacted to assist you.";
+	} else if (req.body.Body) {
+		resp = "Your emergency contact has been contacted to assist you.";
+	}
+	res.send("<Response><Message>" + resp + " Recieved.</Message></Response>");
+});
+
+app.get('start/:t', function(req, res){
+	client.messages.create({
+	    body: 'Did you take your medicine today? If you have Reply with 1, If you can not find your medicine Reply with 2, If there is an emergency Reply with 3',
+	    to: '+13128520877',  // Text this number
+	    from: '+14782470519' //9 // From a valid Twilio number
+	}, function(err, message) {
+	    res.status(200).send();
+	    console.log(message);
+	    if (err) {
+	    	console.log(err);
+	    }
+	    next();
+	});
 });
 
 app.get('/', function(req, res){
