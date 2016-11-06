@@ -221,7 +221,7 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
                 when: 'Apr 23 , 2016',
                 notes: "Saved W Epi Pen"
             }, {
-                company: 'Peanut Reaction',
+                company: 'Cat Itchiness',
                 location: 'Toronto, Ontario',
                 when: 'Apr 23 , 2016',
                 notes: "Saved W Epi Pen"

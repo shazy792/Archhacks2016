@@ -66,6 +66,7 @@ Restapi.route('arduino', function(req, res, next){
 		rfid: req.query.rfid
 	}, function(err, user){
 		if (err) console.log(err);
+		//if (err) throw err;
 		
 		var name = user.name ? user.name : "";
 		var age = user.age ? user.age : "";
@@ -164,7 +165,7 @@ function isAdmin(req, res, next){
 // Registers the REST on /resources
 Restapi.register(app, '/api');
 
-// Registers the REST on /resources 
+// Registers the REST on /resources
 Restapi.register(app, '/api/rest');
 Userapi.register(app, '/api/auth');
 
