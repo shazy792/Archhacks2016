@@ -67,8 +67,11 @@ Restapi.route('arduino', function(req, res, next){
 	}, function(err, user){
 		if (err) throw err;
 		
+		var name = ""||user.name;
+		var age = ""||user.age;
+		var weight = ""||user.weight;
 		if (user){
-			res.send("weight: " + user.weight);
+			res.send("name: " + user.name + "age:" + user.age + "weight:" + user.weight);
 		} else {
 			res.send("Not a user");
 		}
