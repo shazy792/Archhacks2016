@@ -67,7 +67,7 @@ Restapi.route('arduino.get', function(req, res, next){
 	}, function(err, user){
 
 		if (err) console.log(err);
-
+		res.status(200).send();
 
 		var name = user.name ? user.name : "";
 		var age = user.age ? user.age : "";
