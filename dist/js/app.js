@@ -37,16 +37,16 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
                   }
                 }]
             })
-        // .state('bracelet.register', {
-        //     url: '/register',
-        //     templateUrl: 'partials/bracelet-register.html',
-        //     controller: 'authCtrl',
-        //     onEnter: ['$state', 'auth', function($state, auth){
-        //       if(auth.isLoggedIn()){
-        //         $state.go('bracelet.home');
-        //       }
-        //     }]
-        // })
+        .state('bracelet.register', {
+            url: '/register',
+            templateUrl: 'partials/bracelet-register.html',
+            controller: 'authCtrl',
+            onEnter: ['$state', 'auth', function($state, auth){
+              if(auth.isLoggedIn()){
+                $state.go('bracelet.home');
+              }
+            }]
+        })
         // TODO
         .state('bracelet.profile', {
             url: '/profile',
@@ -141,7 +141,7 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
     };
 
     auth.register = function(user){
-      return $http.post('/api/register', user).success(function(data){
+      return $http.post('/api/auth', user).success(function(data){
         auth.saveToken(data.token);
       });
     };
