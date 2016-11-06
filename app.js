@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(methodOverride());
 
 //mongoose.connect("mongodb://localhost/bracelets");
-mongoose.connect("mongodb://bracelets:archhacks2016@jello.modulusmongo.net:27017/zimisu7S");
+mongoose.connect("mongodb://bracelets:archhacks2016@jello.modulusmongo.net:27017/igosop2E");
 
 // This is the mongo model - Change this!
 var Restapi = app.restapi = restful.model('bracelet', mongoose.Schema({
@@ -67,7 +67,7 @@ Restapi.route('arduino', function(req, res, next){
 	}, function(err, user){
 		if (err) throw err;
 		
-		var name = ""||user.name;
+		var name = user.name || "";
 		var age = ""||user.age;
 		var weight = ""||user.weight;
 		if (user){
