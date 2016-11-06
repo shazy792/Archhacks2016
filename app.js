@@ -63,6 +63,7 @@ Restapi.route('sendtext.get', function(req, res, next){
 
 Restapi.route('arduino', function(req, res, next){
 	console.log(req.query.rfid);
+	res.status(200).send();
 	Restapi.findOne({
 		rfid: req.query.rfid
 	}, function(err, user){
