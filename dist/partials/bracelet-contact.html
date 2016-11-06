@@ -1,1 +1,21 @@
-<h1>sup</h1>
+<md-toolbar md-scroll-shrink ng-if="true">
+   <div class="md-toolbar-tools">
+     <h3>
+       <span>Contact Info</span>
+     </h3>
+   </div>
+ </md-toolbar>
+<md-content layout="column" layout-padding>
+<md-subheader class="md-no-sticky">Emergency Contacts</md-subheader>
+       <md-list-item class="md-2-line" ng-repeat="phone in phones">
+         <md-icon class="fa fa-phone"></md-icon>
+         <div class="md-list-item-text">
+           <h3> {{ phone.number }} </h3>
+           <p> {{ phone.type }} </p>
+         </div>
+         <md-button class="md-secondary md-icon-button" aria-label="call">
+           <i class="fa fa-phone" aria-hidden="true"></i>
+         </md-button>
+       </md-list-item>
+     </md-list>
+   </md-content>
