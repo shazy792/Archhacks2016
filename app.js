@@ -61,6 +61,11 @@ Restapi.route('sendtext.get', function(req, res, next){
 	});
 });
 
+Restapi.route('arduino.get', function(req, res, next){
+	console.log('Arduino Request');
+	console.log(req.body);
+});
+
 // Rest for new users and authentication
 var Userapi = app.userapi = restful.model('auth', mongoose.Schema({
 	username: {type: String, required: true},
