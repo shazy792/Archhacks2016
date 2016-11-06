@@ -278,24 +278,14 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
             when: 'Mar 23 , 2016',
             notes: ""
         }, {
-            company: 'Peanut Reaction',
+            company: 'Penicillin Reaction',
             location: 'Toronto, Ontario',
-            when: 'Apr 23 , 2016',
-            notes: "Saved W Epi Pen"
+            when: 'Feb 23 , 2016',
+            notes: "Rash, throat seizing"
         }, {
             company: 'Peanut Reaction',
             location: 'Toronto, Ontario',
-            when: 'Apr 23 , 2016',
-            notes: "Saved W Epi Pen"
-        }, {
-            company: 'Peanut Reaction',
-            location: 'Toronto, Ontario',
-            when: 'Apr 23 , 2016',
-            notes: "Saved W Epi Pen"
-        }, {
-            company: 'Peanut Reaction',
-            location: 'Toronto, Ontario',
-            when: 'Apr 23 , 2016',
+            when: 'Jan 23 , 2016',
             notes: "Saved W Epi Pen"
         }];
         $scope.phones = [{
@@ -327,35 +317,23 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
         }];
         $scope.todos = [{
             face: imagePath,
-            what: 'Allergy Altert',
+            what: 'Allergy Alert',
             who: 'Some Guy',
             when: '3:08PM',
             notes: " Use Epi-Pen Mounted to my Belt "
         }, {
             face: imagePath,
-            what: 'Allergy Altert',
+            what: 'Seizure',
             who: 'Some Guy',
             when: '3:08PM',
-            notes: " Use Epi-Pen Mounted to my Belt "
+            notes: "2nd instance, same day"
         }, {
             face: imagePath,
-            what: 'Allergy Altert',
+            what: 'Seizure',
             who: 'Some Guy',
-            when: '3:08PM',
-            notes: " Use Epi-Pen Mounted to my Belt "
-        }, {
-            face: imagePath,
-            what: 'Allergy Altert',
-            who: 'Some Guy',
-            when: '3:08PM',
-            notes: " Use Epi-Pen Mounted to my Belt "
-        }, {
-            face: imagePath,
-            what: 'Allergy Altert',
-            who: 'Some Guy',
-            when: '3:08PM',
-            notes: " Use Epi-Pen Mounted to my Belt "
-        }, ];
+            when: '1:08PM',
+            notes: "Minor Occurance"
+        }];
 
     })
 
