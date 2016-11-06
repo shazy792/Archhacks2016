@@ -61,9 +61,10 @@ Restapi.route('sendtext.get', function(req, res, next){
 	});
 });
 
-Restapi.route('arduino.get', function(req, res, next){
+Restapi.route('arduino', function(req, res, next){
 	console.log('Arduino Request');
 	console.log(req.body);
+	res.send('YO!');
 });
 
 // Rest for new users and authentication
