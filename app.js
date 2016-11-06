@@ -67,6 +67,33 @@ var Userapi = app.userapi = restful.model('auth', mongoose.Schema({
 }))
 .methods(['get', 'post', 'put', 'delete']);
 
+Userapi.after('post', function(req, res, next){
+	Userapi.findOne({
+		username: req.body.username
+	}, function(err, user){
+		if (err) throw err;
+
+		if (!user){
+			res.json({success: false, message: "Login Failed"});
+		} else if (user) {
+			if (user.password != req.body.password) {
+				res.json({success: false, message: "Login Failed"});
+			} else {
+				var token = jsonWebToken.sign(user, app.get('secret'), {
+					expiresIn: "1440m"
+				});
+
+				res.json({
+					success: true,
+					message: "Logged in",
+					token: token
+				});
+			}
+		}
+		next();
+	});
+});
+
 Userapi.route('login.post', function(req, res, next){
 	//res.status(200).send();
 	Userapi.findOne({
