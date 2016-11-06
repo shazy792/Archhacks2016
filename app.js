@@ -66,14 +66,12 @@ Restapi.route('arduino', function(req, res, next){
 		rfid: req.query.rfid
 	}, function(err, user){
 		if (err) throw err;
-<<<<<<< HEAD
 
-=======
-		
+
 		var name = user.name ? user.name : "";
 		var age = user.age ? user.age : "";
 		var weight = user.weight ? user.weight : "";
->>>>>>> 60a165a7dc175fb1e826d66cc7d91396e613de4e
+
 		if (user){
 			res.send("name: " + user.name + "\nage:" + user.age + "\nweight:" + user.weight);
 		} else {

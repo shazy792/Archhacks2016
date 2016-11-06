@@ -13,7 +13,7 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
     })
 
     // children states of bracelet
-        .state('bracelet.emergency', {
+    .state('bracelet.emergency', {
             url: '/emergency',
             templateUrl: 'partials/bracelet-emergency.html',
             resolve: { // automatically queries all posts before state finishing loading!!
@@ -32,16 +32,16 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
             }
         })
         .state('bracelet.login', {
-                url: '/login',
-                templateUrl: 'partials/bracelet-login.html',
-                controller: 'authCtrl',
+            url: '/login',
+            templateUrl: 'partials/bracelet-login.html',
+            controller: 'authCtrl',
 
-                onEnter: ['$state', 'auth', function($state, auth){
-                  if(auth.isLoggedIn()){
-                    $state.go('bracelet.home');
-                  }
-                }]
-            })
+            onEnter: ['$state', 'auth', function($state, auth) {
+                if (auth.isLoggedIn()) {
+                    $state.go('bracelet.profile');
+                }
+            }]
+        })
         .state('bracelet.register', {
             url: '/register',
             templateUrl: 'partials/bracelet-register.html',
@@ -58,10 +58,10 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
             templateUrl: 'partials/bracelet-profile.html',
         })
 
-        .state('bracelet.records', {
-            url: '/records',
-            templateUrl: 'partials/bracelet-records.html'
-        });
+    .state('bracelet.records', {
+        url: '/records',
+        templateUrl: 'partials/bracelet-records.html'
+    });
 
 
     // catches and brings to home page
@@ -70,99 +70,110 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
 
 .factory('postsFactory', function($http, auth) {
 
-        var o = {
-            posts: []
+    var o = {
+        posts: []
+    };
+
+
+
+    o.getAll = function() {
+        return $http.get('/api/rest', {
+          headers: {
+              Authorization: 'Bearer ' + auth.getToken()
+          }
+      }).success(function(data) {
+          console.log(data);
+            angular.copy(data, o.posts);
+        });
+    };
+
+
+    o.createPost = function(post) {
+        return $http.post('/api/', post, {
+            headers: {
+                Authorization: 'Bearer ' + auth.getToken()
+            }
+        }).success(function(data) {
+            o.posts.push(data);
+            angular.copy(data, o.posts); // this is required to see the updated DOM!
+        });
+    };
+
+
+    o.deletePost = function(id) {
+        return $http.delete('/api/' + id, {
+            headers: {
+                Authorization: 'Bearer ' + auth.getToken()
+            }
+        }).success(function(data) {
+            angular.copy(data, o.posts);
+        }); // in progress
+    };
+
+    o.editPost = function(id, edit) {
+        return $http.put('/api/' + id, edit, {
+            headers: {
+                Authorization: 'Bearer ' + auth.getToken()
+            }
+        }).success(function(data) {
+            angular.copy(data, o.posts);
+        });
+    };
+    return o;
+
+})
+
+// authorization factory
+.factory('auth', function($http, $window) {
+        var auth = {};
+
+        auth.saveToken = function(token) {
+            $window.localStorage['cdok-bracelet-token'] = token;
         };
 
+        auth.getToken = function() {
+            return $window.localStorage['cdok-bracelet-token'];
+        };
 
+        auth.isLoggedIn = function() {
+            var token = auth.getToken();
 
-        o.getAll = function() {
-            return $http.get('/api/').success(function(data) {
-                angular.copy(data, o.posts);
+            if (token) {
+                var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+                return payload.exp > Date.now() / 1000;
+            } else {
+                return false;
+            }
+        };
+
+        auth.currentUser = function() {
+            if (auth.isLoggedIn()) {
+                var token = auth.getToken();
+                var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+                return payload.username;
+            }
+        };
+
+        auth.register = function(user) {
+            return $http.post('/api/auth', user).success(function(data) {
+                console.log(data);
+                auth.saveToken(data.token);
             });
         };
 
-
-        o.createPost = function(post) {
-            return $http.post('/api/', post, {
-              headers: {Authorization: 'Bearer ' + auth.getToken()}
-            }).success(function(data) {
-                o.posts.push(data);
-                angular.copy(data, o.posts); // this is required to see the updated DOM!
+        auth.logIn = function(user) {
+            return $http.post('/api/auth/login', user).success(function(data) {
+                auth.saveToken(data.token);
             });
         };
 
-
-        o.deletePost = function(id) {
-            return $http.delete('/api/' + id, {
-              headers: {Authorization: 'Bearer ' + auth.getToken()}
-            }).success(function(data) {
-                angular.copy(data, o.posts);
-            }); // in progress
+        auth.logOut = function() {
+            $window.localStorage.removeItem('cdok-bracelet-token');
         };
 
-        o.editPost = function(id, edit) {
-            return $http.put('/api/' + id, edit, {
-              headers: {Authorization: 'Bearer ' + auth.getToken()}
-            }).success(function(data) {
-                angular.copy(data, o.posts);
-            });
-        };
-        return o;
-
-    })
-
-    // authorization factory
-    .factory('auth', function($http,$window){
-      var auth = {};
-
-      auth.saveToken = function(token){
-        $window.localStorage['cdok-bracelet-token'] = token;
-      };
-
-      auth.getToken = function(){
-        return $window.localStorage['cdok-bracelet-token'];
-      };
-
-      auth.isLoggedIn = function(){
-        var token = auth.getToken();
-
-        if(token){
-          var payload = JSON.parse($window.atob(token.split('.')[1]));
-
-          return payload.exp > Date.now() / 1000;
-        } else {
-          return false;
-        }
-      };
-
-      auth.currentUser = function(){
-        if(auth.isLoggedIn()){
-        var token = auth.getToken();
-        var payload = JSON.parse($window.atob(token.split('.')[1]));
-
-        return payload.username;
-      }
-    };
-
-    auth.register = function(user){
-      return $http.post('/api/auth', user).success(function(data){
-        console.log(data);
-        auth.saveToken(data.token);
-      });
-    };
-
-    auth.logIn = function(user){
-      return $http.post('/api/auth/login', user).success(function(data){
-        auth.saveToken(data.token);
-      });
-    };
-
-    auth.logOut = function(){
-      $window.localStorage.removeItem('cdok-bracelet-token');
-    };
-
-    return auth;
+        return auth;
 
     })
     // app controller
@@ -200,140 +211,141 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
             $scope.newPost.body = newBody;
             var r = confirm("Are you sure you want to edit this post?");
             if (r === true) {
-              postsFactory.editPost(id, $scope.newPost);
+                postsFactory.editPost(id, $scope.newPost);
             } else {
                 alert("Not deleted");
             }
         };
 
 
-            $scope.items = [
-                "Show Allergies",
-                "Show Name",
-                "Show Blood-Type",
-                "Show Medical History"
-            ];
+        $scope.items = [
+            "Show Allergies",
+            "Show Name",
+            "Show Blood-Type",
+            "Show Medical History"
+        ];
 
-            var imagePath = 'img/LOGO.png';
-            $scope.issues = [{
-                company: 'Peanut Reaction',
-                location: 'Toronto, Ontario',
-                when: 'Apr 23 , 2016',
-                notes: "Saved W Epi Pen"
-            }, {
-                company: 'Cat Itchiness',
-                location: 'Toronto, Ontario',
-                when: 'Apr 23 , 2016',
-                notes: "Saved W Epi Pen"
-            },{
-                company: 'Peanut Reaction',
-                location: 'Toronto, Ontario',
-                when: 'Apr 23 , 2016',
-                notes: "Saved W Epi Pen"
-            },{
-                company: 'Peanut Reaction',
-                location: 'Toronto, Ontario',
-                when: 'Apr 23 , 2016',
-                notes: "Saved W Epi Pen"
-            },{
-                company: 'Peanut Reaction',
-                location: 'Toronto, Ontario',
-                when: 'Apr 23 , 2016',
-                notes: "Saved W Epi Pen"
-            },{
-                company: 'Peanut Reaction',
-                location: 'Toronto, Ontario',
-                when: 'Apr 23 , 2016',
-                notes: "Saved W Epi Pen"
-            }];
-            $scope.phones = [{
-                type: 'Home',
-                number: '(555) 251-1234',
-                options: {
-                    icon: 'communication:phone'
-                }
-            }, {
-                type: 'Cell',
-                number: '(555) 786-9841',
-                options: {
-                    icon: 'communication:phone',
-                    avatarIcon: true
-                }
-            }, {
-                type: 'Office',
-                number: '(555) 314-1592',
-                options: {
-                    face: imagePath
-                }
-            }, {
-                type: 'Offset',
-                number: '(555) 192-2010',
-                options: {
-                    offset: true,
-                    actionIcon: 'communication:phone'
-                }
-            }];
-            $scope.todos = [{
-                face: imagePath,
-                what: 'Allergy Altert',
-                who: 'Some Guy',
-                when: '3:08PM',
-                notes: " Use Epi-Pen Mounted to my Belt "
-            }, {
-                face: imagePath,
-                what: 'Allergy Altert',
-                who: 'Some Guy',
-                when: '3:08PM',
-                notes: " Use Epi-Pen Mounted to my Belt "
-            }, {
-                face: imagePath,
-                what: 'Allergy Altert',
-                who: 'Some Guy',
-                when: '3:08PM',
-                notes: " Use Epi-Pen Mounted to my Belt "
-            }, {
-                face: imagePath,
-                what: 'Allergy Altert',
-                who: 'Some Guy',
-                when: '3:08PM',
-                notes: " Use Epi-Pen Mounted to my Belt "
-            }, {
-                face: imagePath,
-                what: 'Allergy Altert',
-                who: 'Some Guy',
-                when: '3:08PM',
-                notes: " Use Epi-Pen Mounted to my Belt "
-            }, ];
+        var imagePath = 'img/LOGO.png';
+
+        $scope.issues = [{
+            company: 'Peanut Reaction',
+            location: 'Toronto, Ontario',
+            when: 'Apr 23 , 2016',
+            notes: "Saved W Epi Pen"
+        }, {
+            company: 'Cat Itchiness',
+            location: 'Toronto, Ontario',
+            when: 'Apr 23 , 2016',
+            notes: "Saved W Epi Pen"
+        }, {
+            company: 'Peanut Reaction',
+            location: 'Toronto, Ontario',
+            when: 'Apr 23 , 2016',
+            notes: "Saved W Epi Pen"
+        }, {
+            company: 'Peanut Reaction',
+            location: 'Toronto, Ontario',
+            when: 'Apr 23 , 2016',
+            notes: "Saved W Epi Pen"
+        }, {
+            company: 'Peanut Reaction',
+            location: 'Toronto, Ontario',
+            when: 'Apr 23 , 2016',
+            notes: "Saved W Epi Pen"
+        }, {
+            company: 'Peanut Reaction',
+            location: 'Toronto, Ontario',
+            when: 'Apr 23 , 2016',
+            notes: "Saved W Epi Pen"
+        }];
+        $scope.phones = [{
+            type: 'Home',
+            number: '(555) 251-1234',
+            options: {
+                icon: 'communication:phone'
+            }
+        }, {
+            type: 'Cell',
+            number: '(555) 786-9841',
+            options: {
+                icon: 'communication:phone',
+                avatarIcon: true
+            }
+        }, {
+            type: 'Office',
+            number: '(555) 314-1592',
+            options: {
+                face: imagePath
+            }
+        }, {
+            type: 'Offset',
+            number: '(555) 192-2010',
+            options: {
+                offset: true,
+                actionIcon: 'communication:phone'
+            }
+        }];
+        $scope.todos = [{
+            face: imagePath,
+            what: 'Allergy Altert',
+            who: 'Some Guy',
+            when: '3:08PM',
+            notes: " Use Epi-Pen Mounted to my Belt "
+        }, {
+            face: imagePath,
+            what: 'Allergy Altert',
+            who: 'Some Guy',
+            when: '3:08PM',
+            notes: " Use Epi-Pen Mounted to my Belt "
+        }, {
+            face: imagePath,
+            what: 'Allergy Altert',
+            who: 'Some Guy',
+            when: '3:08PM',
+            notes: " Use Epi-Pen Mounted to my Belt "
+        }, {
+            face: imagePath,
+            what: 'Allergy Altert',
+            who: 'Some Guy',
+            when: '3:08PM',
+            notes: " Use Epi-Pen Mounted to my Belt "
+        }, {
+            face: imagePath,
+            what: 'Allergy Altert',
+            who: 'Some Guy',
+            when: '3:08PM',
+            notes: " Use Epi-Pen Mounted to my Belt "
+        }, ];
 
     })
 
-    .controller('authCtrl', function($scope, $state, auth) { // injecting state to use 'ng-if' on $state.current.name
-      $scope.user = {};
+.controller('authCtrl', function($scope, $state, auth) { // injecting state to use 'ng-if' on $state.current.name
+        $scope.user = {};
 
-      $scope.register = function(){
-        auth.register($scope.user).error(function(error){
-          $scope.error = error;
-        }).then(function(){
-          $state.go('bracelet.profile');
-        });
-      };
+        $scope.register = function() {
+            auth.register($scope.user).error(function(error) {
+                $scope.error = error;
+            }).then(function() {
+                $state.go('bracelet.profile');
+            });
+        };
 
-      $scope.logIn = function(){
-        auth.logIn($scope.user).error(function(error){
-          $scope.error = error;
-        }).then(function(){
-          $state.go('bracelet.profile');
-        });
-      };
+        $scope.logIn = function() {
+            auth.logIn($scope.user).error(function(error) {
+                $scope.error = error;
+            }).then(function() {
+                $state.go('bracelet.profile');
+            });
+        };
 
     })
     .controller('navCtrl', function($scope, $state, auth) { // injecting state to use 'ng-if' on $state.current.name
-      $scope.$state = $state;
-      $scope.currentNavItemArray = window.location.href.match(/#\/bracelet\/(\w+)/); // reads from the URL to find the current state to be used in md-nav-bar
-      $scope.currentNavItem = $scope.currentNavItemArray[1];
-      $scope.isLoggedIn = auth.isLoggedIn;
-      $scope.currentUser = auth.currentUser;
-      $scope.logOut = auth.logOut;
+        $scope.$state = $state;
+        $scope.currentNavItemArray = window.location.href.match(/#\/bracelet\/(\w+)/); // reads from the URL to find the current state to be used in md-nav-bar
+        $scope.currentNavItem = $scope.currentNavItemArray[1];
+        $scope.isLoggedIn = auth.isLoggedIn;
+        $scope.currentUser = auth.currentUser;
+        $scope.logOut = auth.logOut;
     })
 
 .config(function($mdThemingProvider, $mdIconProvider) {
