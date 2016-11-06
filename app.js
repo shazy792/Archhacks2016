@@ -166,7 +166,7 @@ function isAdmin(req, res, next){
 
 
 // Registers the REST on /resources
-Restapi.register(app, '/api');
+//Restapi.register(app, '/api');
 
 // Registers the REST on /resources
 Restapi.register(app, '/api/rest');
@@ -176,6 +176,10 @@ app.post('/message', function(req, res){
 	console.log(req.body.Body);
 	console.log(req.body.From);
 	res.send("<Response><Message>" + req.body.Body + " Recieved.</Message></Response>");
+});
+
+app.get('/', function(req, res){
+	res.sendfile('./index.html');
 });
 
 app.listen(process.env.PORT || 3222, function(){
