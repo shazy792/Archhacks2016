@@ -13,39 +13,48 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
     })
 
     // children states of bracelet
-        .state('bracelet.privacy', {
-            url: '/privacy',
-            templateUrl: 'partials/bracelet-privacy.html',
+        .state('bracelet.emergency', {
+            url: '/emergency',
+            templateUrl: 'partials/bracelet-emergency.html',
             resolve: { // automatically queries all posts before state finishing loading!!
                 postPromise: ['postsFactory', function(posts) {
                     return posts.getAll();
                 }]
             }
         })
-        .state('bracelet.home', {
-                url: '/home',
-                templateUrl: 'partials/bracelet-home.html',
-                controller: 'authCtrl',
+        .state('bracelet.contact', {
+            url: '/contact',
+            templateUrl: 'partials/bracelet-contact.html',
+            resolve: { // automatically queries all posts before state finishing loading!!
+                postPromise: ['postsFactory', function(posts) {
+                    return posts.getAll();
+                }]
+            }
+        })
+        .state('bracelet.login', {
+                url: '/login',
+                templateUrl: 'partials/bracelet-login.html',
+                // controller: 'authCtrl',
                 resolve: { // automatically queries all posts before state finishing loading!!
                     postPromise: ['postsFactory', function(posts) {
                         return posts.getAll();
                     }]
                 },
-                onEnter: ['$state', 'auth', function($state, auth){
-                  if(auth.isLoggedIn()){
-                    $state.go('bracelet.home');
-                  }
-                }]
+                // onEnter: ['$state', 'auth', function($state, auth){
+                //   if(auth.isLoggedIn()){
+                //     $state.go('bracelet.home');
+                //   }
+                // }]
             })
         .state('bracelet.register', {
             url: '/register',
             templateUrl: 'partials/bracelet-register.html',
             controller: 'authCtrl',
-            onEnter: ['$state', 'auth', function($state, auth){
-              if(auth.isLoggedIn()){
-                $state.go('bracelet.home');
-              }
-            }]
+            // onEnter: ['$state', 'auth', function($state, auth){
+            //   if(auth.isLoggedIn()){
+            //     $state.go('bracelet.home');
+            //   }
+            // }]
         })
         // TODO
         .state('bracelet.profile', {
@@ -142,12 +151,13 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
 
     auth.register = function(user){
       return $http.post('/api/auth', user).success(function(data){
+        console.log(data);
         auth.saveToken(data.token);
       });
     };
 
     auth.logIn = function(user){
-      return $http.post('/api/login', user).success(function(data){
+      return $http.post('/api/auth/login', user).success(function(data){
         auth.saveToken(data.token);
       });
     };
