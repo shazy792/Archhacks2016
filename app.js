@@ -66,7 +66,7 @@ Restapi.route('arduino', function(req, res, next){
 		rfid: req.query.rfid
 	}, function(err, user){
 
-		if (err) throw err;
+		if (err) console.log(err);
 
 
 		var name = user.name ? user.name : "";
@@ -82,7 +82,7 @@ Restapi.route('arduino', function(req, res, next){
 		var weight = user.weight ? user.weight : "";
 
 		if (user){
-			res.send("name: " + user.name + "age:" + user.age + "weight:" + user.weight);
+			res.send("name:" + user.name + " age:" + user.age + " weight:" + user.weight);
 		} else {
 			res.send("Not a user");
 		}
