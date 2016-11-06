@@ -13,7 +13,11 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
         controller: 'braceletCtrl'
 
     })
-
+    .state('bracelet.admin', {
+            url: '/admin',
+            templateUrl: 'partials/bracelet-admin.html',
+        
+        })
     // children states of bracelet
     .state('bracelet.emergency', {
             url: '/emergency',
