@@ -1,24 +1,24 @@
 <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-    <md-nav-item md-nav-sref="bracelet.home" name="home">
-        <span class="nav-large">Home</span>
+    <md-nav-item md-nav-sref="bracelet.profile" name="home">
+        <span class="nav-large">Profile</span>
         <span class="nav-small"><i class="fa fa-home" aria-hidden="true"></i></span>
     </md-nav-item>
-    <md-nav-item md-nav-sref="bracelet.profile" name="profile">
-        <span class="nav-large">Profile</span>
+    <md-nav-item md-nav-sref="bracelet.contact" name="profile">
+        <span class="nav-large">Contact Info</span>
         <span class="nav-small"><i class="fa fa-desktop" aria-hidden="true"></i></span>
     </md-nav-item>
     <md-nav-item md-nav-sref="bracelet.records" name="Records">
         <span class="nav-large">View Records</span>
         <span class="nav-small"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
     </md-nav-item>
-    <md-nav-item md-nav-sref="bracelet.privacy" name="about">
-        <span class="nav-large">Edit Privacy</span>
+    <md-nav-item md-nav-sref="bracelet.emergency" name="about">
+        <span class="nav-large">Emergency Info</span>
         <span class="nav-small"><i class="fa fa-lightbulb-o" aria-hidden="true"></i></span>
     </md-nav-item>
-    <md-nav-item ng-show="isLoggedIn()" md-nav-sref="bracelet.new" name="new">
+    <!-- <md-nav-item ng-show="isLoggedIn()" md-nav-sref="bracelet.new" name="new">
         <span class="nav-large">New Post</span>
         <span class="nav-small"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
-    </md-nav-item>
+    </md-nav-item> -->
     <!-- <md-nav-item ng-hide="isLoggedIn()" md-nav-sref="bracelet.register" name="register">
         <span class="nav-large">Register</span>
         <span class="nav-small"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
@@ -27,10 +27,10 @@
         <span class="nav-large">Login</span>
         <span class="nav-small"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
     </md-nav-item> also hidden for public -->
-    <md-nav-item ng-show="isLoggedIn()" md-nav-click="logOut()" name="logout">
+    <!-- <md-nav-item ng-show="isLoggedIn()" md-nav-click="logOut()" name="logout">
         <span class="nav-large">Logout</span>
         <span class="nav-small"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
-    </md-nav-item>
+    </md-nav-item> -->
 </md-nav-bar>
 
 

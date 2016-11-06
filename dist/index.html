@@ -27,7 +27,30 @@
                 </div>
             </div>
         </md-toolbar>
-
+        <md-item>
+                <a ui-sref="bracelet.login">
+                    <md-item-content layout="row" layout-align="start center">
+                        <div class="inset">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </div>
+                        <div class="inset">
+                            LogIn
+                        </div>
+                    </md-item-content>
+                </a>
+            </md-item>
+            <md-item>
+                    <a ui-sref="bracelet.register">
+                        <md-item-content layout="row" layout-align="start center">
+                            <div class="inset">
+                                <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            </div>
+                            <div class="inset">
+                                Register
+                            </div>
+                        </md-item-content>
+                    </a>
+                </md-item>
     </md-sidenav>
     <div layout="column" class="relative" layout-fill role="main">
         <div id="mainViews" ng-cloak ui-view></div>
