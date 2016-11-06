@@ -48,7 +48,7 @@ var Restapi = app.restapi = restful.model('bracelet', mongoose.Schema({
 
 Restapi.route('sendtext.get', function(req, res, next){
 	client.messages.create({
-	    body: 'Hello from Node JS',
+	    body: 'Did you take your medicine today? If you have Reply with 1, If you can not find your medicine Reply with 2, If there is an emergency Reply with 3',
 	    to: '+13128520877',  // Text this number
 	    from: '+14782470519' //9 // From a valid Twilio number
 	}, function(err, message) {
