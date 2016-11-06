@@ -48,7 +48,7 @@ var Restapi = app.restapi = restful.model('bracelet', mongoose.Schema({
 
 Restapi.route('sendtext.get', function(req, res, next){
 	client.messages.create({
-	    body: 'Hello from Node JS',
+	    body: 'Did you take your medicine today? If you have Reply with 1, If you can not find your medicine Reply with 2, If there is an emergency Reply with 3',
 	    to: '+13128520877',  // Text this number
 	    from: '+14782470519' //9 // From a valid Twilio number
 	}, function(err, message) {
@@ -70,10 +70,10 @@ Restapi.route('arduino', function(req, res, next){
 		
 		if (user){
 
-			var name = user.name ? user.name : "";
-			var age = user.age ? user.age : "";
-			var weight = user.weight ? user.weight : "";
-			res.send("name:" + user.name + " age:" + user.age + " weight:" + user.weight);
+			/*var name = user.name ? user.name : "";
+			var btype = user.btype ? user.btype : "";
+			var weight = user.weight ? user.weight : "";*/
+			res.send("Name:" + user.name + " Blood_Type:" + user.btype + " Allergies:" + user.allergies[0]);
 			//res.status(200).send();
 		} else {
 			res.send("Not a user");
