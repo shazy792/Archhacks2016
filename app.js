@@ -61,30 +61,23 @@ Restapi.route('sendtext.get', function(req, res, next){
 	});
 });
 
-Restapi.route('arduino.get', function(req, res, next){
+Restapi.route('arduino', function(req, res, next){
 	Restapi.findOne({
 		rfid: req.query.rfid
 	}, function(err, user){
 
-		if (err) console.log(err);
-		res.status(200).send();
-
-		var name = user.name ? user.name : "";
-		var age = user.age ? user.age : "";
-		var weight = user.weight ? user.weight : "";
-
-
-		if (err) console.log(err);
-		//if (err) throw err;
-
-		var name = user.name ? user.name : "";
-		var age = user.age ? user.age : "";
-		var weight = user.weight ? user.weight : "";
-
+		if (err) throw err;
+		
 		if (user){
+
+			var name = user.name ? user.name : "";
+			var age = user.age ? user.age : "";
+			var weight = user.weight ? user.weight : "";
 			res.send("name:" + user.name + " age:" + user.age + " weight:" + user.weight);
+			//res.status(200).send();
 		} else {
 			res.send("Not a user");
+			//res.status(200).send();
 		}
 		next();
 	});
@@ -126,11 +119,11 @@ Userapi.after('post', function(req, res, next){
 });
 
 Userapi.route('login.post', function(req, res, next){
-	res.status(200).send();
+	//res.status(200).send();
 	Userapi.findOne({
 		username: req.body.username
 	}, function(err, user){
-		if (err) throw err;
+		if (err) throw next(err);
 
 		if (!user){
 			res.json({success: false, message: "Login Failed"});
