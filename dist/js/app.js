@@ -34,17 +34,13 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
         .state('bracelet.login', {
                 url: '/login',
                 templateUrl: 'partials/bracelet-login.html',
-                // controller: 'authCtrl',
-                resolve: { // automatically queries all posts before state finishing loading!!
-                    postPromise: ['postsFactory', function(posts) {
-                        return posts.getAll();
-                    }]
-                },
-                // onEnter: ['$state', 'auth', function($state, auth){
-                //   if(auth.isLoggedIn()){
-                //     $state.go('bracelet.home');
-                //   }
-                // }]
+                controller: 'authCtrl',
+
+                onEnter: ['$state', 'auth', function($state, auth){
+                  if(auth.isLoggedIn()){
+                    $state.go('bracelet.home');
+                  }
+                }]
             })
         .state('bracelet.register', {
             url: '/register',
@@ -318,7 +314,7 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
         auth.register($scope.user).error(function(error){
           $scope.error = error;
         }).then(function(){
-          $state.go('bracelet.home');
+          $state.go('bracelet.profile');
         });
       };
 
@@ -326,7 +322,7 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
         auth.logIn($scope.user).error(function(error){
           $scope.error = error;
         }).then(function(){
-          $state.go('bracelet.home');
+          $state.go('bracelet.profile');
         });
       };
 

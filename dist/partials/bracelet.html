@@ -3,15 +3,15 @@
         <span class="nav-large">Profile</span>
         <span class="nav-small"><i class="fa fa-home" aria-hidden="true"></i></span>
     </md-nav-item>
-    <md-nav-item md-nav-sref="bracelet.contact" name="contact">
+    <md-nav-item ng-hide="isLoggedIn()" md-nav-sref="bracelet.contact" name="contact">
         <span class="nav-large">Contact Info</span>
         <span class="nav-small"><i class="fa fa-desktop" aria-hidden="true"></i></span>
     </md-nav-item>
-    <md-nav-item md-nav-sref="bracelet.records" name="records">
+    <md-nav-item ng-hide="isLoggedIn()" md-nav-sref="bracelet.records" name="records">
         <span class="nav-large">View Records</span>
         <span class="nav-small"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
     </md-nav-item>
-    <md-nav-item md-nav-sref="bracelet.emergency" name="emergency">
+    <md-nav-item ng-hide="isLoggedIn()" md-nav-sref="bracelet.emergency" name="emergency">
         <span class="nav-large">Emergency Info</span>
         <span class="nav-small"><i class="fa fa-lightbulb-o" aria-hidden="true"></i></span>
     </md-nav-item>
@@ -27,10 +27,10 @@
         <span class="nav-large">Login</span>
         <span class="nav-small"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
     </md-nav-item> also hidden for public -->
-    <!-- <md-nav-item ng-show="isLoggedIn()" md-nav-click="logOut()" name="logout">
+    <md-nav-item ng-show="isLoggedIn()" md-nav-click="logOut()" name="logout">
         <span class="nav-large">Logout</span>
         <span class="nav-small"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
-    </md-nav-item> -->
+    </md-nav-item>
 </md-nav-bar>
 
 
