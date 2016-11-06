@@ -13,7 +13,7 @@
             </div>
         </md-card-title-media>
         <md-card-title-text>
-            <span class="md-headline">{{posts[0].name}}</span>
+            <span class="md-headline">{{posts[userIndex].name}}</span>
             <span id="intro-caption" class="md-subhead description"><i class="fa fa-map-marker" aria-hidden="true"></i><em>&nbsp; Toronto, Ontario</em></span>
         </md-card-title-text>
     </md-card-title>
@@ -24,10 +24,11 @@
         <md-list-item class="md-3-line" ng-click="null"> <!--  ng-repeat="item in posts"  -->
             <img src="{{imagePath}}" class="md-avatar" />
             <div class="md-list-item-text" layout="column">
-                <h3>{{ posts[0].age }} years old</h3>
-                <h4>Height: {{ posts[0].height }}, Weight: {{ posts[0].weight }}</h4>
-                <p>Bloodtype {{posts[0].btype}}</p>
-                <p>Phone: {{posts[0].phone}}</p>
+
+                <h3>{{ posts[userIndex].age }} years old</h3>
+                <h4>Height: {{ posts[userIndex].height }}, Weight: {{ posts[userIndex].weight }}</h4>
+                <p>Bloodtype {{posts[userIndex].btype}}</p>
+                <p>Phone: {{posts[userIndex].phone}}</p>
             </div>
         </md-list-item>
 </md-content>

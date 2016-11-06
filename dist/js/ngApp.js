@@ -1,5 +1,6 @@
 var doThis;
 var imagePath = 'img/LOGO.png';
+var user;
 angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -40,7 +41,7 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
         .state('bracelet.login', {
             url: '/login',
             templateUrl: 'partials/bracelet-login.html',
-            controller: 'authCtrl',
+
 
             onEnter: ['$state', 'auth', function($state, auth) {
                 if (auth.isLoggedIn()) {
@@ -51,7 +52,7 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
         .state('bracelet.register', {
             url: '/register',
             templateUrl: 'partials/bracelet-register.html',
-            controller: 'authCtrl',
+
             // onEnter: ['$state', 'auth', function($state, auth){
             //   if(auth.isLoggedIn()){
             //     $state.go('bracelet.home');
@@ -61,7 +62,7 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
         // TODO
         .state('bracelet.profile', {
             url: '/profile',
-            templateUrl: 'partials/bracelet-profile.html',
+            templateUrl: 'partials/bracelet-profile.html'
         })
 
     .state('bracelet.records', {
@@ -80,7 +81,15 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
         posts: []
     };
 
-
+    o.getUser = function(){
+      return $http.get('/api/rest/:id', {
+        headers: {
+          Authorization: 'Bearer' + auth.getToken()
+        }
+      }).success(function(data) {
+        angular.copy(data, o.posts);
+      });
+    };
 
     o.getAll = function() {
         return $http.get('/api/rest', {
@@ -182,14 +191,15 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
 
     })
     // app controller
-    .controller('braceletCtrl', function($scope, $state, $http, postsFactory, auth) { // injecting state to use 'ng-if' on $state.current.name
+    .controller('braceletCtrl', function($scope, $state, $http, postsFactory, auth, $rootScope) { // injecting state to use 'ng-if' on $state.current.name
         $scope.imagePath = 'img/LOGO.png';
         $scope.$state = $state;
         $scope.currentNavItemArray = window.location.href.match(/#\/bracelet\/(\w+)/); // reads from the URL to find the current state to be used in md-nav-bar
         $scope.currentNavItem = $scope.currentNavItemArray[1];
         $scope.isLoggedIn = auth.isLoggedIn;
 
-        $scope.currentUser = auth.currentUser;
+        $scope.currentUser = auth.currentUser();
+        console.log($scope.currentUser);
         $scope.logOut = auth.logOut;
 
 
@@ -199,7 +209,7 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
         doThis = $scope.posts;
         console.log(doThis[0]);
         $scope.formData = {}; // initializes form
-
+        console.log($scope.formData.username);
         $scope.addPost = function() {
             postsFactory.createPost($scope.formData);
             $scope.formData = {};
@@ -225,6 +235,28 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
             }
         };
 
+
+        $scope.user = {};
+
+        $scope.register = function() {
+            auth.register($scope.user).error(function(error) {
+                $scope.error = error;
+            }).then(function() {
+                $state.go('bracelet.profile');
+            });
+        };
+
+        $scope.logIn = function() {
+            auth.logIn($scope.user).error(function(error) {
+                $scope.error = error;
+            }).then(function() {
+                console.log($scope.user);
+                $scope.popMe = $scope.user.username;
+                $scope.userIndex = $scope.popMe[$scope.popMe.length - 1];
+                console.log($scope.userIndex);
+                $state.go('bracelet.profile');
+            });
+        };
 
         $scope.items = [
             "Show Allergies",
@@ -327,7 +359,7 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
 
     })
 
-.controller('authCtrl', function($scope, $state, auth) { // injecting state to use 'ng-if' on $state.current.name
+.controller('authCtrl', function($scope, $state, auth, $rootScope) { // injecting state to use 'ng-if' on $state.current.name
         $scope.user = {};
 
         $scope.register = function() {
@@ -342,6 +374,10 @@ angular.module('braceletApp', ['ngMaterial', 'ui.router']) // dependancies
             auth.logIn($scope.user).error(function(error) {
                 $scope.error = error;
             }).then(function() {
+                console.log($scope.user);
+                $scope.popMe = $scope.user.username;
+                $scope.userIndex = $scope.popMe[$scope.popMe.length - 1];
+                user = $scope.userIndex;
                 $state.go('bracelet.profile');
             });
         };
