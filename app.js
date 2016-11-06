@@ -62,16 +62,18 @@ Restapi.route('sendtext.get', function(req, res, next){
 });
 
 Restapi.route('arduino', function(req, res, next){
-	console.log(req.query.rfid);
-	res.status(200).send();
 	Restapi.findOne({
 		rfid: req.query.rfid
 	}, function(err, user){
 		if (err) throw err;
-		res.send('weight: ' + user.weight);
+		
+		if (user){
+			res.send("weight: " + user.weight);
+		} else {
+			res.send("Not a user");
+		}
+		next();
 	});
-
-	next();
 });
 
 // Rest for new users and authentication
